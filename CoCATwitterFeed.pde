@@ -161,7 +161,7 @@ void draw()
       //String df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
       //String tweetDate = df.format(status.getCreatedAt());
       //String tweetDate = status.getCreatedAt();
-          Calendar now = Calendar.getInstance();
+      Calendar now = Calendar.getInstance();
       Calendar tweetDate = Calendar.getInstance();
       tweetDate.setTime(status.getCreatedAt());
   
@@ -173,30 +173,67 @@ void draw()
   
       String timeStamp;
   
-      if (diffDays < 1) {
-        // posted < 24 hours ago
-        if (diffHours > 1) {
-          timeStamp = (diffHours + 1) + " hours ago";
-        } else if (diffHours == 1) {
-          if (diffMinutes >= 30) {
-            timeStamp = (diffHours + 1) + " hours ago";
-          } else {
-            timeStamp = "about an hour ago";
-          }
-        } else {
-          // posted < 1 hour ago
-          if (diffMinutes > 1) {
-            timeStamp = (diffMinutes + 1) + " minutes ago";
-          } else if (diffMinutes == 1) {  
-            timeStamp = "about a minute ago";
-          } else {
-            timeStamp = "less than a minute ago";
-          }
-        }
+  //    if (diffDays < 1) {
+  //      // posted < 24 hours ago
+  //      if (diffHours > 1) {
+  //        timeStamp = (diffHours + 1) + " hours ago";
+  //      } else if (diffHours == 1) {
+  //        if (diffMinutes >= 30) {
+  //          timeStamp = (diffHours + 1) + " hours ago";
+  //        } else {
+  //          timeStamp = "about an hour ago";
+  //        }
+  //      } else {
+  //        // posted < 1 hour ago
+  //        if (diffMinutes > 1) {
+  //          timeStamp = (diffMinutes + 1) + " minutes ago";
+  //        } else if (diffMinutes == 1) {  
+  //          timeStamp = "about a minute ago";
+  //        } else {
+  //          timeStamp = "less than a minute ago";
+  //        }
+  //      }
+  //    } else {
+  //      // posted over a day ago, show date
+  //      timeStamp = new SimpleDateFormat("dd/MM/yyyy hh:mm a").format(tweetDate.getTime());
+  //    }
+ 
+      // TODAY or YESTERDAY
+      // figure out what day yesterday was
+      Calendar yester = Calendar.getInstance();
+      yester.add(Calendar.DATE, -1);
+
+      String toDay = "";
+      String yesterDay = "";
+      String tweetDay = "";
+      String dayStamp = "";
+      
+      toDay = new SimpleDateFormat("dd").format(now.getTime());
+      yesterDay = new SimpleDateFormat("dd").format(yester.getTime());
+      tweetDay = new SimpleDateFormat("dd").format(tweetDate.getTime());
+
+      println(toDay + " " + yesterDay + " " + tweetDay);
+
+      // today
+      if (tweetDay.equals(toDay) == true) {
+        println("today");
+        dayStamp = "today";
+        timeStamp = new SimpleDateFormat("h:mm a").format(tweetDate.getTime());
+        
+      // yesterday
+      } else if (tweetDay.equals(yesterDay) == true) {
+        println("yesterday");
+        dayStamp = "yesterday";
+        timeStamp = new SimpleDateFormat("h:mm a").format(tweetDate.getTime());
+        
+      // older
       } else {
-        // posted over a day ago, show date
-        timeStamp = new SimpleDateFormat("dd/MM/yyyy hh:mm a").format(tweetDate.getTime());
-      }
+        println("older");
+        timeStamp = new SimpleDateFormat("d/M/yyyy h:mm a").format(tweetDate.getTime());
+     }
+      
+      timeStamp = timeStamp + " " + dayStamp;
+
   
       //println(diffDays + " days, " + diffHours + " hours, " + diffMinutes + " minutes, " + diffSeconds + " seconds.");
       //println(timeStamp);
@@ -206,6 +243,7 @@ void draw()
       textFont(f, tweetFontSize);
       textLeading(tweetFontSize);
       text(" " + timeStamp, tweetX, tweetY+tweetHeight);
+  
   
   
       // AUTHOR
