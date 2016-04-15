@@ -135,18 +135,57 @@ void draw()
       if (webImg != null){
         if (Math.random() >= 0.5){
           tweetX = padding*2;
+    // DATE
+    //String df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    //String tweetDate = df.format(status.getCreatedAt());
+    //String tweetDate = status.getCreatedAt();
+    //println(status.getCreatedAt()); 
+    Calendar now = Calendar.getInstance();
+    Calendar tweetDate = Calendar.getInstance();
+    tweetDate.setTime(status.getCreatedAt());
+
+    long diff = now.getTimeInMillis() - tweetDate.getTimeInMillis();
+    //long diffSeconds = diff / 1000 % 60;
+    long diffMinutes = diff / (60 * 1000) % 60;
+    long diffHours = diff / (60 * 60 * 1000) % 24;
+    long diffDays = diff / (24 * 60 * 60 * 1000);
+
+    String timeStamp;
+
+    if (diffDays < 1) {
+      // posted < 24 hours ago
+      if (diffHours > 1) {
+        timeStamp = (diffHours + 1) + " hours ago";
+      } else if (diffHours == 1) {
+        if (diffMinutes >= 30) {
+          timeStamp = (diffHours + 1) + " hours ago";
         } else {
-          tweetX = width-tweetWidth-padding-padding;
+          timeStamp = "about an hour ago";
         }
-        if (Math.random() >= 0.5){
-          tweetY = padding*2;
+      } else {
+        // posted < 1 hour ago
+        if (diffMinutes > 1) {
+          timeStamp = (diffMinutes + 1) + " minutes ago";
+        } else if (diffMinutes == 1) {  
+          timeStamp = "about a minute ago";
         } else {
-          tweetY = height-padding-padding-tweetHeight;
-        } 
+          timeStamp = "less than a minute ago";
+        }
       }
-      else {
-        tweetX = random(padding*2, width-tweetWidth-padding-padding);
-        tweetY = random(padding*2, height-padding-padding-tweetHeight);
+    } else {
+      // posted over a day ago, show date
+      timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(tweetDate.getTime());
+    }
+
+    //println(diffDays + " days, " + diffHours + " hours, " + diffMinutes + " minutes, " + diffSeconds + " seconds.");
+    //println(timeStamp);
+
+    fill(255);
+    f = loadFont("ThreeSix10-072Regular-48.vlw");
+    textFont(f, tweetFontSize);
+    textLeading(tweetFontSize);
+    text(" " + timeStamp, tweetX, tweetY+tweetHeight);
+
       }
       
       float tweetFontSize = (width+height)/70;
