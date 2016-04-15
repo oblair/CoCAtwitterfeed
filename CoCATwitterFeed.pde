@@ -14,7 +14,6 @@ import twitter4j.*;
 import twitter4j.auth.*;
 import twitter4j.api.*;
 import java.util.*;
-import java.text.SimpleDateFormat;
 
 Twitter twitter;
 PFont f;
@@ -120,12 +119,12 @@ void draw()
  
  
       // tweet group random positioning
-      float tweetWidth = width*0.7;
-      float tweetHeight = width*0.4;
+      float tweetWidth = width*0.6;
+      float tweetHeight = width*0.3;
       
       if (width > height) {
-        tweetWidth = height*0.7;
-        tweetHeight = height*0.4;
+        tweetWidth = height*0.6;
+        tweetHeight = height*0.3;
       }
       
       float tweetX = 0;
@@ -194,26 +193,14 @@ void draw()
       fill(0, (255*0.85));
       rect(tweetX-padding, tweetY-padding, tweetWidth+(padding*2), tweetHeight+(padding*2));
       
-  
-      // DATE
-      //String df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-      //String tweetDate = df.format(status.getCreatedAt());
-      //String tweetDate = status.getCreatedAt();
-      println(status.getCreatedAt());
-      fill(255);
-      f = loadFont("ThreeSix10-072Regular-48.vlw");
-      textFont(f, tweetFontSize);
-      textLeading(tweetFontSize);
-      text(" " + status.getCreatedAt(), tweetX, tweetY+tweetHeight);
-  
-  
+      
       // AUTHOR
       String tweetAuthor = status.getUser().getName() + "\n@" + status.getUser().getScreenName();
       fill(hilightColor);
       f = loadFont("ThreeSix10-126Heavy-48.vlw");
       textFont(f, tweetFontSize);
       textLeading(tweetFontSize);
-      text(tweetAuthor, tweetX, tweetY+tweetHeight-(tweetFontSize*2));
+      text(tweetAuthor, tweetX, tweetY+tweetHeight-tweetFontSize);
  
  
       // TWEET
