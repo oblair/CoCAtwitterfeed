@@ -1,6 +1,7 @@
 //////////////////////////
-// CoCATwitterFeed processing sketch by Oliver Blair 2016
+// CoCATwitterFeed processing sketch
 // o.blair@massey.ac.nz
+// t.turnidge@massey.ac.nz
 //////////////////////////
 
 //////////////////////////
@@ -194,7 +195,7 @@ void draw()
         }
       } else {
         // posted over a day ago, show date
-        timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(tweetDate.getTime());
+        timeStamp = new SimpleDateFormat("dd/MM/yyyy hh:mm a").format(tweetDate.getTime());
       }
   
       //println(diffDays + " days, " + diffHours + " hours, " + diffMinutes + " minutes, " + diffSeconds + " seconds.");
