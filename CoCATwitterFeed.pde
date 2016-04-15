@@ -160,12 +160,51 @@ void draw()
       //String df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
       //String tweetDate = df.format(status.getCreatedAt());
       //String tweetDate = status.getCreatedAt();
-      println(status.getCreatedAt());
+          Calendar now = Calendar.getInstance();
+      Calendar tweetDate = Calendar.getInstance();
+      tweetDate.setTime(status.getCreatedAt());
+  
+      long diff = now.getTimeInMillis() - tweetDate.getTimeInMillis();
+      //long diffSeconds = diff / 1000 % 60;
+      long diffMinutes = diff / (60 * 1000) % 60;
+      long diffHours = diff / (60 * 60 * 1000) % 24;
+      long diffDays = diff / (24 * 60 * 60 * 1000);
+  
+      String timeStamp;
+  
+      if (diffDays < 1) {
+        // posted < 24 hours ago
+        if (diffHours > 1) {
+          timeStamp = (diffHours + 1) + " hours ago";
+        } else if (diffHours == 1) {
+          if (diffMinutes >= 30) {
+            timeStamp = (diffHours + 1) + " hours ago";
+          } else {
+            timeStamp = "about an hour ago";
+          }
+        } else {
+          // posted < 1 hour ago
+          if (diffMinutes > 1) {
+            timeStamp = (diffMinutes + 1) + " minutes ago";
+          } else if (diffMinutes == 1) {  
+            timeStamp = "about a minute ago";
+          } else {
+            timeStamp = "less than a minute ago";
+          }
+        }
+      } else {
+        // posted over a day ago, show date
+        timeStamp = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(tweetDate.getTime());
+      }
+  
+      //println(diffDays + " days, " + diffHours + " hours, " + diffMinutes + " minutes, " + diffSeconds + " seconds.");
+      //println(timeStamp);
+  
       fill(255);
       f = loadFont("ThreeSix10-072Regular-48.vlw");
       textFont(f, tweetFontSize);
       textLeading(tweetFontSize);
-      text(" " + status.getCreatedAt(), tweetX, tweetY+tweetHeight);
+      text(" " + timeStamp, tweetX, tweetY+tweetHeight);
   
   
       // AUTHOR
