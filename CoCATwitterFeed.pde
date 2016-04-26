@@ -23,7 +23,7 @@ PImage webImg;
 
 
 // HASHTAGS TO PULL TWEETS FROM
-String searchString = "#makethespace OR #coca158 OR #coca379 OR #tweetmyproject OR #spatial3 OR #spatial4 OR #spatialtype OR #designexpedition OR #coca1 OR #coca2 OR #coca3 OR #coca4 OR #coca494 OR #coca454";
+String searchString = "#makethespace OR #coca158 OR #coca379 OR #tweetmyproject OR #cocaspace OR #spatial2 OR #spatial3 OR #spatial4 OR #spatialtype OR #designexpedition OR #coca1 OR #coca2 OR #coca3 OR #coca4 OR #coca494 OR #coca454";
 //String searchString = "#spatialtype";
 
 List<Status> tweets;
